@@ -3,6 +3,14 @@ from bs4 import BeautifulSoup
 import requests
 import timeInfo
 
+from datetime import *
+
+def getDateAndTime():
+    date = datetime.today().strftime("%B %d, %Y")
+    time = datetime.now().strftime('%I:%M %p')
+
+    return [str(date), str(time)]
+
 def stockAlert(symbol, name):
     url = "https://finance.yahoo.com/quote/" + symbol
     mainUrl = requests.get(url)
@@ -16,9 +24,10 @@ def stockAlert(symbol, name):
 
     timeStr = getTime[-1:9:-1]
     time = timeStr[::-1].strip()
+    date = getDateAndTime()
 
     newName = name.lower()
     finalName = newName[0].upper() + newName[1:]
 
-    print(f"\nThe price of {symbol} is ${getPrice} at {time} on March 26 2021.")
-    return f"\nThe price of {sybmbol} is ${getPrice} at {time} on March 26 2021."
+    print(f"\nThe price of {symbol} is ${getPrice} at {time} on {date[0]}.")
+    return f"\nThe price of {sybmbol} is ${getPrice} at {time} on {date[0]}."
